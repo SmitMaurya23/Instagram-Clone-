@@ -1,0 +1,162 @@
+/* Global styles */
+body {
+  background-color: #FFDAB9; /* Peach */
+  font-family: 'Ubuntu', sans-serif;
+}
+
+/* Main container for the login form */
+.login-container {
+  background-color: #FFFFFF;
+  width: 50%;
+  height: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 7em auto;
+  border-radius: 1.5em;
+  box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
+}
+
+/* Sign in title */
+.signin-title {
+  padding-top: 40px;
+  color: #FF4500; /* Orange Red */
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: bold;
+  font-size: 23px;
+}
+
+/* Input fields for username and password */
+.username-input, .password-input {
+  width: 76%;
+  color: #af510d; /* Saddle Brown */
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  background: rgba(255, 218, 185, 0.04); /* Peach Puff */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border: 5px solid rgba(0, 0, 0, 0.02);
+  margin-bottom: 20px;
+  margin-left: auto;
+  text-align: center;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+/* Styles for input fields when they are focused */
+.username-input:focus, .password-input:focus {
+  border: 7px solid rgba(255, 218, 185, 0.18) !important; /* Peach Puff on focus */
+}
+
+/* Submit button for the form */
+.submit-button {
+  cursor: pointer;
+  border-radius: 5em;
+  color: #fff;
+  background: linear-gradient(to right, #FF4500, #FF6347); /* Orange Red to Tomato gradient */
+  border: 0;
+  padding: 10px 40px;
+  font-family: 'Ubuntu', sans-serif;
+  margin-top: 20 px;
+  margin-left: auto;
+  font-size: 13px;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Styles for smaller screens */
+@media (max-width: 600px) {
+  .login-container {
+      border-radius: 0px;
+  }
+}
+
+
+/* Link to the registration page */
+.register-link {
+  text-decoration: none; /* Remove underline from link */
+}
+
+.register-link .submit-button {
+  cursor: pointer;
+  border-radius: 5em;
+  color: #fff;
+  background: linear-gradient(to right, #FF4500, #FF6347); /* Orange Red to Tomato gradient */
+  border: 0;
+  padding: 10px 40px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 13px;
+  margin-top: 20px;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
+}
+
+
+/* Global styles */
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Ubuntu', sans-serif;
+  background-color: #FFE4B5; /* Moccasin */
+}
+
+/* Main container for the profile */
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Profile card */
+.profile-card {
+  background-color: #ffffff;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Profile information */
+.profile-info {
+  margin-bottom: 20px;
+}
+
+/* Profile picture */
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+
+
+
+/* User details */
+.profile-info p {
+  margin: 10px 0;
+}
+
+/* Submit button for the form and profile actions */
+.submit-button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #FF4500;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Change the background color of the submit button on hover */
+.submit-button:hover {
+  background-color: #FF6347;
+}

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<style>
+  /* Styles for the feed container and images */
+  .feed-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    width: auto;
+    max-width: 1060px; /* 200px (image width) * 5 images + 10px (margin-left) + 10px (margin-right) * 5 images */
+    margin: 0 auto; /* This will center the .feed-container if its width is less than its parent's width */
+}
+
+.feed-container .image img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin: 10px;
+    border-radius: 5px;
+    transition: transform 0.3s ease; /* This will animate the transform property */
+}
+
+.feed-container .image img:hover {
+    transform: scale(1.1); /* This will scale the image up to 110% when hovered over */
+}
+
+/* CSS styles for search results */
+.search-results {
+    display: flex;
+    flex-direction: column; /* Display search results vertically */
+    align-items: center; /* Center items horizontally */
+    margin-top: 10px; /* Add some margin at the top */
+  }
+.result-box {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+ /* Additional CSS styles */
+ .profile-picture-search {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%; /* Make it circular */
+      margin-right: 10px; /* Add some spacing between picture and username */
+      cursor: pointer; /* Change cursor to pointer when hovering */
+    }
+
+    .result-box {
+      display: flex;
+      align-items: center; /* Align items vertically */
+      margin-bottom: 10px; /* Add some spacing between search results */
+    }
+
+    .result-box span {
+      cursor: pointer; /* Change cursor to pointer when hovering */
+    }
+
+
+
+</style>
+
+<body>
+  <center>
+    <div class="profile-actions">
+      <a href="/profile"><button class="submit-button">HOME</button></a>
+      <a href="/feed"><button class="submit-button">FEED</button></a>
+    </div>
+  </center>
+  
+  <center>
+    <!-- Search form -->
+    <form action="/search" method="GET">
+      <input type="text" id="searchInput" name="username" placeholder="Search for a user...">
+      <div id="searchResults" class="search-results"></div>
+    </form>
+  </center>
+
+  
+
+  <!-- Main container for the profile -->
+  <div class="main">
+    <!-- Profile card -->
+    <div class="profile-card">
+      <!-- Profile title -->
+      <h2 class="signin-title">Profile</h2>
+      <!-- Profile information -->
+      <div class="profile-info">
+        <!-- Profile picture -->
+        <img class="profile-picture" src="/uploads/<%= user.profileImage %>" alt="Profile Picture">
+        <div><a href="/upload"><button class="submit-button" type="submit">Change Profile Image</button></a> </div>
+        <!-- User details -->
+        <p><strong>Name:</strong> <%= user.name %></p>
+        <p><strong>Email:</strong> <%= user.email %></p>
+        <p><strong>Username:</strong> <%= user.username %></p>
+        <p><strong>Joined:</strong> <%= user.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+      </div>
+      <!-- Profile actions -->
+      <div class="profile-actions">
+        <a href="/editProfile"><button class="submit-button">Edit Profile</button></a>
+        <a href="/changePassword"><button class="submit-button">Change Password</button></a>
+        <a href="/logout"><button class="submit-button">Logout</button></a>
+      </div>
+      <!-- Button for creating a new post -->
+      <div><a href="/uploadPost"><button class="submit-button">Create a New Post</button></a></div>
+      <div><a href="/feed"><button class="submit-button">Feed</button></a></div>
+    </div>
+  </div>
+
+  <!-- Main container for the user feed -->
+  <div class="feed-container">
+    <!-- Iterate over each post in the user's posts array -->
+    <% images.forEach(function(image) { %>
+      <!-- Display the image for each post -->
+      <div class="image">
+        <a href="/postDetail/<%= image %>">
+          <img src="/uploads/<%=image%>" alt="User post">
+        </a>
+      </div>
+    <% }); %>
+  </div>
+
+  <!-- JavaScript for handling user input and displaying search results -->
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const searchResultsContainer = document.getElementById('searchResults');
+
+    searchInput.addEventListener('keydown', async function(event) {
+    // Check if the key pressed is the Enter key
+    if (event.key === 'Enter') {
+      // Prevent the default form submission behavior
+      event.preventDefault();
+      // Log a message to the console
+      console.log('Enter key pressed');
+    }
+  });
+  
+    searchInput.addEventListener('input', async function() {
+      const query = searchInput.value;
+      if (query.length > 0) {
+        try {
+          const response = await fetch(`/search?username=${encodeURIComponent(query)}`);
+          const users = await response.json();
+          if (users.length > 0) {
+            displaySearchResults(users);
+          } else {
+            clearSearchResults();
+            displayUserNotFound();
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        clearSearchResults();
+      }
+    });
+  
+    searchInput.addEventListener('keyup', async function(event) {
+      if (event.key === 'Enter') {
+        const query = searchInput.value.trim(); // Trim to remove leading and trailing whitespace
+        if (query.length > 0) {
+          try {
+            const response = await fetch(`/search?username=${encodeURIComponent(query)}`);
+            const users = await response.json();
+            if (users.length > 0) {
+              // Redirect to the profile page of the first matching user
+              window.location.href = `/userprofile/${encodeURIComponent(users[0].username)}`;
+            } else {
+              // Clear search results and display "User Not Found"
+              clearSearchResults();
+              displayUserNotFound();
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          // If search input is empty, clear search results
+          clearSearchResults();
+        }
+      }
+    });
+  
+    function displaySearchResults(users) {
+      searchResultsContainer.innerHTML = '';
+      users.forEach(user => {
+        const resultBox = createResultBox(user);
+        searchResultsContainer.appendChild(resultBox);
+      });
+    }
+  
+    function createResultBox(user) {
+      const resultBox = document.createElement('div');
+      resultBox.classList.add('result-box');
+  
+      const profilePicture = document.createElement('img');
+      profilePicture.classList.add('profile-picture-search');
+      profilePicture.src = `/uploads/${user.profileImage}`;
+      profilePicture.alt = 'Profile Picture';
+  
+      const username = document.createElement('span');
+      username.textContent = user.username;
+  
+      profilePicture.addEventListener('click', () => redirectToProfile(user.username));
+      username.addEventListener('click', () => redirectToProfile(user.username));
+  
+      resultBox.appendChild(profilePicture);
+      resultBox.appendChild(username);
+  
+      return resultBox;
+    }
+  
+    function clearSearchResults() {
+      searchResultsContainer.innerHTML = '';
+    }
+  
+    function displayUserNotFound() {
+      searchResultsContainer.innerHTML = '<div class="result-box">User Not Found</div>';
+    }
+  
+    function redirectToProfile(username) {
+      window.location.href = `/userprofile/${encodeURIComponent(username)}`;
+    }
+  </script>
+  
+  
+  
+  
+  
+  
+  
+</body>
+</html>

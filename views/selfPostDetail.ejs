@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Detail</title>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .post-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        border: 5px solid #060606;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        width:fit-content;
+        align-items: center;
+        background-color: #fff;
+        margin: 20px;
+    }
+    .post-image {
+        flex: 1;
+        margin-right: 20px;
+        padding-right: 20px;
+    }
+    .post-image img {
+        width: 500px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+    .logo {
+      width:20px;
+        transition: transform 0.3s ease;
+    }
+    .logo:hover {
+        transform: scale(1.1);
+    }
+    .post-details {
+        flex: 2;
+        padding-left: 20px;
+    }
+    .profile-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .profile-info img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .username {
+        font-weight: bold;
+        font-size: 1.2em;
+    }
+    .description {
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+    .likes, .comments {
+      text-align: left;
+        margin-top: 20px;
+        padding-top: 20px;
+        font-size: smaller;
+    }
+</style>
+
+</head>
+<body>
+  <center><div class="profile-actions">
+    <a href="/profile"><button class="submit-button">HOME</button></a>
+    
+    <a href="/feed"><button class="submit-button">FEED</button></a>
+  </div></center>
+  <div class="post-container">
+      <div class="post-image">
+          <!-- Post Image -->
+          <img src="/uploads/<%=post.image%>" alt="Post Image">
+      </div>
+      <div class="post-details">
+        <!-- Profile Info -->
+        <div class="profile-info">
+            <a href="/userprofile/<%=user.username%>">
+              <img src="/uploads/<%=user.profileImage%>" alt="Profile Image">
+              <div class="username"><%=user.username%></div>
+            </a>
+        </div>
+        <!-- Description -->
+        <div class="description">
+            <%=post.description%>
+        </div>
+        <br><br><br>
+        <div>
+        <!-- Likes -->
+        <div class="likes">
+          <a href="/liked/<%=post._id%>"><img src="/images/like.png" class="logo" s="none">   <%=post.likes%></a>
+        </div>
+
+         <!-- Comments -->
+         <div class="comments">
+          <div><img src="/images/comment.png" class="logo" id="comment-icon"></div>
+          <form id="comment-form" style="display: none;" action="/postDetail/<%=post.image%>/comment" method="POST">
+            <textarea id="comment-text" name="comment" placeholder="Add a comment..."></textarea>
+            <button type="submit">Post</button>
+          </form>
+          <div id="existing-comments" style="max-height: 200px; overflow-y: auto;">
+            <% post.comments.reverse().forEach(function(comment) { %>
+              <div class="comment">
+                <a href="/userprofile/<%=comment.username%>">
+                  <strong><%=comment.username%></strong>: <%=comment.text%>
+                </a>
+              </div>
+            <% }); %>
+          </div>
+          <a href="/editPost/<%= post.image %>"><button class="submit-button">EDIT POST</button></a>
+    
+          <a href="/deletePost/<%= post.image %>"><button class="submit-button">DELETE</button></a>
+        </div>
+        
+        </div>
+        </div>
+        </div>
+      </div>
+  </div>
+<script>document.getElementById('comment-icon').addEventListener('click', function() {
+  document.getElementById('comment-form').style.display = 'block';
+});
+</script>
+</body>
+</html>

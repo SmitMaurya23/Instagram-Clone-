@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<style>
+  /* Styles for the feed container and images */
+  .feed-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    width: auto;
+    max-width: 1060px; /* 200px (image width) * 5 images + 10px (margin-left) + 10px (margin-right) * 5 images */
+    margin: 0 auto; /* This will center the .feed-container if its width is less than its parent's width */
+}
+
+.feed-container .image img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin: 10px;
+    border-radius: 10px;
+    transition: transform 0.3s ease; /* This will animate the transform property */
+}
+
+.feed-container .image img:hover {
+    transform: scale(1.1); /* This will scale the image up to 110% when hovered over */
+}
+</style>
+
+<body>
+  <center><div class="profile-actions">
+    <a href="/profile"><button class="submit-button">HOME</button></a>
+    
+    <a href="/feed"><button class="submit-button">FEED</button></a>
+  </div></center>
+  <!-- Main container for the profile -->
+  <div class="main"> 
+  <!-- Main container for the user feed -->
+  <div class="feed-container">
+    <!-- Iterate over each post in the user's posts array -->
+    <% images.forEach(function(image) { %>
+      <!-- Display the image for each post -->
+      <div class="image">
+      <a href="/postDetail/<%= image %>">
+        <img src="/uploads/<%= image %>" alt="User post">
+      </a>
+    </div>
+    <% }); %>
+  </div>
+</body>
+</html>

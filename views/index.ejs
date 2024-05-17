@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body>
+  <!-- Main container for the login form -->
+  <div class="login-container">
+    <!-- Sign in title -->
+    <p class="signin-title" align="center">Sign in</p>
+    
+    <!-- Login form -->
+    <form class="login-form" action="/login" method="post" align="center">
+      <!-- Display error message if there is any -->
+      <% if (error) { %>
+        <p class="error-message" align="center"><%= error %></p>
+      <% } %>
+      <input class="username-input" type="text" align="center" placeholder="Username" name="username">
+      <input class="password-input" type="password" align="center" placeholder="Password" name="password">
+      <div><button class="submit-button" align="center" type="submit">Sign in</button></div>
+    </form>
+
+
+   <!-- Link to the registration page -->
+<div align="center">
+  <a href="/register" class="register-link">
+    <button class="submit-button" type="button">New to Instagram? Register</button>
+  </a>
+</div>
+
+  </div>
+</body>
+</html>

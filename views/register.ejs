@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+
+<body>
+  <!-- Display error message if there is any -->
+  <p class="error-message" align="center"><%= error %></p>
+  
+  <!-- Main container for the registration form -->
+  <div class="login-container">
+    <!-- Register title -->
+    <p class="signin-title" align="center">Register</p>
+    
+    <!-- Registration form -->
+    <form class="login-form" action="/register" method="post" align="center">
+      <input class="username-input" type="text" align="center" placeholder="Name" name="name">
+      <!-- Input field for username -->
+      <!-- Input field for email -->
+      <input class="username-input" type="email" align="center" placeholder="Email" name="email">
+      <!-- Input field for username -->
+      <input class="username-input" type="text" align="center" placeholder="Username" name="username">
+      <!-- Input field for password -->
+      <input class="password-input" type="password" align="center" placeholder="Password" name="password">
+      <!-- Submit button for the form -->
+      <div><button class="submit-button" type="submit" align="center">Register</button></div>
+    </form>    
+  </div>
+</body>
+</html>
